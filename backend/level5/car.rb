@@ -13,4 +13,8 @@ class Car
   def self.all
     @@instances
   end
+
+  def self.reset
+    @@instances = []
+  end
 end

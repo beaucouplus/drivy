@@ -21,6 +21,12 @@ class Rental
     @@instances
   end
 
+  def self.reset
+    @@instances.clear
+    @@price_data[:rentals].clear
+    @@stakeholders[:rentals].clear
+  end
+
   def self.price_data
     @@price_data
   end
