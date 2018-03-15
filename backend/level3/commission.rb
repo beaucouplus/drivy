@@ -9,9 +9,9 @@ class Commission
 
   def call
     {
-      "insurance_fee": insurance_fee.to_i,
-      "assistance_fee": assistance_fee.to_i,
-      "drivy_fee": drivy_fee.to_i
+      insurance_fee: insurance_fee.to_i,
+      assistance_fee: assistance_fee.to_i,
+      drivy_fee: drivy_fee.to_i
     }
   end
 

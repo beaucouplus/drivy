@@ -1,4 +1,4 @@
-class SetPricePerDay
+class SumPricesPerDay
 
   attr_reader :length, :price_per_day
   def initialize(length, price_per_day)

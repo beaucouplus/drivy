@@ -5,7 +5,7 @@ require_relative "car"
 require_relative "commission"
 require_relative "create_objects"
 require_relative "rental"
-require_relative "set_price_per_day"
+require_relative "sum_prices_per_day"
 
 def import_json(json)
   file = File.read(json)
