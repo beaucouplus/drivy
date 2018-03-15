@@ -36,7 +36,7 @@ class Rental
   end
 
   def time_price
-    SetPricePerDay.new(length,car.price_per_day).call
+    SumPricesPerDay.new(length,car.price_per_day).call
   end
 
   def set_car(param)
