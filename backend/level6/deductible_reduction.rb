@@ -3,6 +3,7 @@ class DeductibleReduction
   attr_reader :length, :suscribed_to_option
 
   def initialize(rental_length, suscribed_to_option)
+    raise ArgumentError.new(Error.msg[:equal_or_under_0]) if rental_length <= 0
     @length = rental_length
     @suscribed_to_option = suscribed_to_option
   end

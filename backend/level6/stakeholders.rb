@@ -1,12 +1,17 @@
 class StakeHolders
 
-
   attr_reader :total_price, :commission, :deductible, :renter_action
   attr_accessor :stakeholders
-  def initialize(total_price, commission, deductible, renter_action = :debit)
-    @total_price = total_price
-    @commission = commission
-    @deductible = deductible
+
+  def initialize(params, renter_action = :debit)
+    raise ArgumentError.new(Error.msg[:under_0]) if params[:total_price] < 0
+    raise ArgumentError.new(Error.msg[:under_0]) if params[:deductible_amount] < 0
+    unless params[:commission].keys.sort == [:assistance_fee,:drivy_fee,:insurance_fee]
+      raise ArgumentError.new(Error.msg[:wrong_commision_parameters])
+    end
+    @total_price = params[:total_price]
+    @commission = params[:commission]
+    @deductible = params[:deductible_amount]
     @renter_action = renter_action
     @stakeholders = { driver: [ renter_action, total_driver_debit ],
                       owner: [ current_action, total_owner_credit ],

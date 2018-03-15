@@ -7,11 +7,12 @@ class Rental
   @price_data = { rentals: [] }
   @stakeholders = { rentals: [] }
 
-
-
   attr_reader :id, :car, :start_date, :end_date, :distance, :deductible_reduction
 
   def initialize(params)
+    Error.check_dates(params[:start_date])
+    Error.check_dates(params[:end_date])
+    raise ArgumentError.new(Error.msg[:equal_or_under_0]) if params[:distance] <= 0
     @id = params[:id]
     @car = set_car(params[:car_id])
     @start_date = params[:start_date]
@@ -76,7 +77,8 @@ class Rental
   end
 
   def actions
-    StakeHolders.new(total_price, commission, deductible_amount).call
+    params = { total_price: total_price, deductible_amount: deductible_amount, commission: commission }
+    StakeHolders.new(params).call
   end
 
   def commission

@@ -2,6 +2,8 @@ class SumPricesPerDay
 
   attr_reader :length, :price_per_day
   def initialize(length, price_per_day)
+    raise ArgumentError.new(Error.msg[:equal_or_under_0]) if length < 0
+    raise ArgumentError.new(Error.msg[:under_0]) if price_per_day < 0
     @length = length
     @price_per_day = price_per_day
   end

@@ -9,6 +9,11 @@ class RentalModification < Rental
   attr_reader :id, :rental, :car, :start_date, :end_date, :distance, :deductible_reduction
 
   def initialize(params)
+    Error.check_dates(params[:start_date]) if params[:start_date]
+    Error.check_dates(params[:end_date]) if params[:end_date]
+    if params[:distance]
+      raise ArgumentError.new(Error.msg[:equal_or_under_0]) if params[:distance] <= 0
+    end
     @id = params[:id]
     @rental = set_rental(params[:rental_id])
     @car = rental.car
@@ -49,10 +54,11 @@ class RentalModification < Rental
   end
 
   def updated_actions
+    params = { total_price: delta_price.abs, deductible_amount: delta_deductible_reduction.abs, commission: delta_commission }
     if delta_price < 0
-      StakeHolders.new(delta_price.abs, delta_commission, delta_deductible_reduction.abs, :credit).call
+      StakeHolders.new(params, :credit).call
     else
-      StakeHolders.new(delta_price.abs, delta_commission, delta_deductible_reduction.abs).call
+      StakeHolders.new(params).call
     end
   end
 

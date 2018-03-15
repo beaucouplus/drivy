@@ -3,8 +3,7 @@ class Commission
   attr_reader :commission, :rental_length
 
   def initialize(rental_price, rental_length)
-    commission_error = "Price divided by length should at least equal 1000"
-    raise ArgumentError.new(commission_error) if rental_price / rental_length < 1000
+    raise ArgumentError.new(Error.msg[:commission]) if rental_price / rental_length < 1000
     @commission = calculate_commission(rental_price)
     @rental_length = rental_length
   end
